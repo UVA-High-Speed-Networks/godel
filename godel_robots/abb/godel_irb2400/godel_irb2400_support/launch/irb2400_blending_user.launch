@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<launch>
+
+  <!-- Bring up simulated robot that can be visualized under the tf namespace 'simulation'
+       Allows for previewing paths generated before execution. -->
+  <include file="$(find industrial_robot_simulator_service)/launch/start_simulation_server.launch"/>
+    
+  <!-- rviz w/ specified configuration -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find godel_irb2400_support)/rviz/irb2400_blending.rviz" output="screen" launch-prefix="nice" required="true"/>
+  
+</launch>
+

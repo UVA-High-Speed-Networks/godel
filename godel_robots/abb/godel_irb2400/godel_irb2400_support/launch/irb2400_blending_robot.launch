@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- arguments -->
+  <arg name="sim_robot" default="true"/>
+  <arg name="robot_ip" unless="$(arg sim_robot)" />
+  <arg name="sim_sensor" default="true"/>
+
+
+  <!-- If the user specifies a 'fake' sensor, publish fake data clouds -->
+  <group if="$(arg sim_sensor)">
+    <remap from="generated_cloud" to="sensor_point_cloud"/>
+    <node pkg="godel_surface_detection" type="point_cloud_generator_node" name="point_cloud_generator_node">
+      <rosparam command="load" file="$(find godel_irb2400_support)/config/point_cloud_descriptions.yaml"/>
+    </node>
+  </group>
+
+  <group if="$(arg sim)">
+    <include file="$(find industrial_robot_simulator)/launch/robot_interface_simulator.launch" />
+  </group>
+
+  <group unless="$(arg sim)">
+    <group if="$(arg use_ftp)">
+      <include file="$(find godel_irb2400_moveit_config)/launch/irb2400_robot_ftp_interface.launch">
+        <arg name="robot_ip" value="$(arg robot_ip)"/>
+        <arg name="J23_coupled" value="true"/>
+      </include>
+    </group>
+
+    <!-- If we're not simulating and not using the ABB FTP server... -->
+    <group unless="$(arg use_ftp)">
+      <include file="$(find abb_irb2400_support)/launch/robot_interface_download_irb2400.launch" >
+        <arg name="robot_ip" value="$(arg robot_ip)"/>
+      </include>
+    </group>
+  </group>
+
+ <!-- publish the robot state (tf transforms) -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+  
+</launch>
