@@ -14,11 +14,11 @@
     </node>
   </group>
 
-  <group if="$(arg sim)">
+  <group if="$(arg sim_robot)">
     <include file="$(find industrial_robot_simulator)/launch/robot_interface_simulator.launch" />
   </group>
 
-  <group unless="$(arg sim)">
+  <group unless="$(arg sim_robot)">
     <group if="$(arg use_ftp)">
       <include file="$(find godel_irb2400_moveit_config)/launch/irb2400_robot_ftp_interface.launch">
         <arg name="robot_ip" value="$(arg robot_ip)"/>
