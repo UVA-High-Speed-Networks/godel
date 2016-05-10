@@ -4,7 +4,7 @@
   <arg name="sim_robot" default="true"/>
   <arg name="robot_ip" unless="$(arg sim_robot)" />
   <arg name="sim_sensor" default="true"/>
-  <arg name="use_ftpr" default="true"/>
+  <arg name="use_ftp" default="true"/>
 
   <!-- If the user specifies a 'fake' sensor, publish fake data clouds -->
   <group if="$(arg sim_sensor)">
