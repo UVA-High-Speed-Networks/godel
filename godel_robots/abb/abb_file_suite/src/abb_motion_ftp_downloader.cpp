@@ -104,6 +104,16 @@ void abb_file_suite::AbbMotionFtpDownloader::handleJointTrajectory(
 bool abb_file_suite::AbbMotionFtpDownloader::handleServiceCall(
     abb_file_suite::ExecuteProgram::Request& req, abb_file_suite::ExecuteProgram::Response& res)
 {
+
+if(REMOTE_FTP_DOWNLOADER){
+	std::ofstream ofh(req.file_path.c_str());
+	ofh << req.file_content;
+	ofh.flush();
+}
+else{
+
+}
+
   // Check for existence
   std::ifstream ifh(req.file_path.c_str());
   if (!ifh)

@@ -119,7 +119,7 @@ static bool writeRapidFile(const std::string& path,
                            unsigned process_start, unsigned process_stop,
                            const rapid_emitter::ProcessParams& params)
 {
-  std::ofstream fp("/tmp/blend.mod");
+  std::ofstream fp(path.c_str());
   if (!fp)
   {
     ROS_ERROR_STREAM("Unable to create file: " << path);
@@ -190,7 +190,9 @@ bool godel_process_execution::AbbBlendProcessService::executeProcess(
   unsigned start_index = req.trajectory_approach.points.size();
   unsigned stop_index = start_index + req.trajectory_process.points.size();
 
-  if (!writeRapidFile("/tmp/blend.mod", pts, start_index, stop_index, params))
+  std::string path("/tmp/blend.mod");
+
+  if (!writeRapidFile(path, pts, start_index, stop_index, params))
   {
     ROS_ERROR("Unable to generate RAPID motion file; Cannot execute process.");
     return false;
@@ -199,7 +201,23 @@ bool godel_process_execution::AbbBlendProcessService::executeProcess(
   // Call the ABB driver
 
   abb_file_suite::ExecuteProgram srv;
-  srv.request.file_path = "/tmp/blend.mod";
+
+  srv.request.file_path = path;
+
+  if(REMOTE_FTP_DOWNLOADER){
+
+	  std::ifstream ifs(path.c_str());
+	  std::string file_content( (std::istreambuf_iterator<char>(ifs) ),
+	            (std::istreambuf_iterator<char>()) );
+
+	  srv.request.file_content=file_content;
+
+  }
+  else{
+	  srv.request.file_content="";
+
+  }
+
 
   if (!real_client_.call(srv))
   {

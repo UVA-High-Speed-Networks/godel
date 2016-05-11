@@ -3,6 +3,7 @@
 
 #include <ros/ros.h>
 #include <godel_msgs/BlendProcessExecution.h>
+#define REMOTE_FTP_DOWNLOADER 1
 
 namespace godel_process_execution
 {

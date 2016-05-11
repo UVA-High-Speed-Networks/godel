@@ -6,6 +6,8 @@
 #include <trajectory_msgs/JointTrajectory.h>
 #include "abb_file_suite/ExecuteProgram.h"
 
+#define REMOTE_FTP_DOWNLOADER 1
+
 namespace abb_file_suite
 {
 
