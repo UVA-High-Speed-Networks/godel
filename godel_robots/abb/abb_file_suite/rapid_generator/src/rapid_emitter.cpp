@@ -141,7 +141,7 @@ bool rapid_emitter::emitSetOutput(std::ostream& os, const ProcessParams& params,
   {
     // This wait time is inserted here to ensure that the zone is achieved BEFORE the I/O happens
     os << "WaitTime\\InPos, 0.01;\n";
-    os << "SETDO " << params.output_name << ", " << value << ";\n";
+    //os << "SETDO " << params.output_name << ", " << value << ";\n";
   }
   return os.good();
 }
