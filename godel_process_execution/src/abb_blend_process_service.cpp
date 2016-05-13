@@ -14,7 +14,7 @@
 #include "ros/topic.h"
 
 const static double DEFAULT_JOINT_TOPIC_WAIT_TIME = 5.0; // seconds
-const static double DEFAULT_TRAJECTORY_BUFFER_TIME = 5.0; // seconds
+const static double DEFAULT_TRAJECTORY_BUFFER_TIME = 15.0; // seconds
 const static std::string JOINT_TOPIC_NAME = "/joint_states";
 
 const static std::string THIS_SERVICE_NAME = "blend_process_execution";
