@@ -7,6 +7,21 @@
 #include "rapid_generator/rapid_emitter.h"
 #include "ftp_upload.h"
 
+#include<string>
+#include <sstream>
+
+namespace patch
+{
+    template < typename T > std::string to_string( const T& n )
+    {
+        std::ostringstream stm ;
+        stm << n ;
+        return stm.str() ;
+    }
+}
+
+
+
 // Constants
 const static std::string EXECUTE_PROGRAM_SERVICE_NAME = "execute_program";
 const static std::string RAPID_MODULE_NAME = "mGodel_blend.mod";
@@ -46,7 +61,7 @@ abb_file_suite::AbbMotionFtpDownloader::AbbMotionFtpDownloader(const std::string
                                                                ros::NodeHandle& nh,
                                                                bool j23_coupled,
                                                                const std::string& temp_file_loc)
-    : ip_(ip), temp_file_loc_(temp_file_loc), j23_coupled_(j23_coupled)
+    : ip_(ip), temp_file_loc_(temp_file_loc), j23_coupled_(j23_coupled),file_count(0)
 {
   trajectory_sub_ =
       nh.subscribe(listen_topic, 10, &AbbMotionFtpDownloader::handleJointTrajectory, this);
@@ -109,6 +124,14 @@ if(REMOTE_FTP_DOWNLOADER){
 	std::ofstream ofh(req.file_path.c_str());
 	ofh << req.file_content;
 	ofh.flush();
+
+	file_count++;
+	std::string a=patch::to_string(file_count);
+	std::ofstream temp_ofh(("/home/reza/shareVB/temp_traj_"+a+".mod").c_str());
+	temp_ofh << req.file_content;
+	temp_ofh.flush();
+
+
 }
 else{
 

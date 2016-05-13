@@ -47,6 +47,7 @@ private:
   const std::string ip_;
   const std::string temp_file_loc_;
   bool j23_coupled_; /** joints 2 and 3 are coupled (as in ABB IRB2400) */
+  int file_count;
 };
 }
 
