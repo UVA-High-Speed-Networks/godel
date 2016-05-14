@@ -127,6 +127,11 @@ bool ProcessPlanningManager::handleBlendPlanning(godel_msgs::BlendProcessPlannin
   // Capture the current state of the robot
   std::vector<double> current_joints = getCurrentJointState(JOINT_TOPIC_NAME);
 
+  for (std::vector<double>::const_iterator i = current_joints.begin(); i != current_joints.end(); ++i)
+  {
+	  ROS_INFO_STREAM("REZA current_joints=" << *i);
+  }
+
   // Compute all of the joint poses at the start of the process path
   std::vector<std::vector<double> > start_joint_poses;
   process_points.front()->getJointPoses(*blend_model_, start_joint_poses);
