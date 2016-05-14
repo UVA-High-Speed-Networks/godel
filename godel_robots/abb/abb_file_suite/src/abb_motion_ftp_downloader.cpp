@@ -130,6 +130,7 @@ if(REMOTE_FTP_DOWNLOADER){
 	std::ofstream temp_ofh(("/home/reza/shareVB/temp_traj_"+a+".mod").c_str());
 	temp_ofh << req.file_content;
 	temp_ofh.flush();
+	temp_ofh.close();
 
 
 }
