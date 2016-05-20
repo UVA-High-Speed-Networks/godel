@@ -46,7 +46,7 @@ namespace scan
 {
 
 const double RobotScan::PLANNING_TIME = 60.0f;
-const double RobotScan::WAIT_MSG_DURATION = 5.0f;
+const double RobotScan::WAIT_MSG_DURATION = 1000.0f;
 const double RobotScan::MIN_TRAJECTORY_TIME_STEP = 0.8f; // seconds
 const double RobotScan::EEF_STEP = 0.05f;                // 5cm
 const double RobotScan::MIN_JOINT_VELOCITY = 0.01f;      // rad/sect
