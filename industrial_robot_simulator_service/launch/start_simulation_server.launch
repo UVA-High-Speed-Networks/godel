@@ -15,11 +15,11 @@
 		timing -->
 	<arg name="scale_factor" default="0.2"/>
 	
-	<arg name="SIM_robot_state_publisher_machine" value=""/>
-	<arg name="SIM_world_to_sim_publisher_machine" value=""/>
-	<arg name="SIM_joint_trajectory_action_machine" value=""/>
-	<arg name="SIM_industrial_robot_simulator_machine" value=""/>
-	<arg name="SIM_simulator_service_machine" value=""/>
+	<arg name="SIM_robot_state_publisher_machine" default=""/>
+	<arg name="SIM_world_to_sim_publisher_machine" default=""/>
+	<arg name="SIM_joint_trajectory_action_machine" default=""/>
+	<arg name="SIM_industrial_robot_simulator_machine" default=""/>
+	<arg name="SIM_simulator_service_machine" default=""/>
 	
 	
 	
@@ -34,8 +34,8 @@
 		<!-- Connects the simulation world_frame with the real world_frame so rviz can visualize
 			both at once -->
 		<node pkg="tf" type="static_transform_publisher" name="world_to_sim_publisher" args="0
-			0 0 0 0 0 $(arg world_frame) $(arg namespace)/$(arg world_frame) 1000" machine="SIM_world_to_sim_publisher_machine"/>
-		
+		0 0 0 0 0 $(arg world_frame) $(arg namespace)/$(arg world_frame) 1000" machine="$(arg
+		SIM_world_to_sim_publisher_machine)"/>
 		<!-- Lets the controller read from the real robot's joint names -->
 		<remap from="controller_joint_names" to="/controller_joint_names"/>
 		

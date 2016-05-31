@@ -40,8 +40,9 @@
 	<machine name="SwRI" address="10.8.0.50" env-loader="/home/gr5yf/Git/USIgniteRobotic/utility/scripts/env-loaderSwRI.sh"
 		user="gr5yf" password="rosindustrial1234"/>
 	<machine name="User" address="10.8.0.60" env-loader="/home/reza/repositories/git/USIgniteRobotic/utility/scripts/env-loaderUser.sh"
-		user="reza" default="true"/>
-	<!-- Brings up action interface for simple trajectory execution - used by laser scanner
+	user="reza" password="a" default="true">
+	</machine>
+		<!-- Brings up action interface for simple trajectory execution - used by laser scanner
 		process execution -->
 	<node name="path_execution_service" pkg="godel_path_execution" type="path_execution_service_node"
 		machine="$(arg path_execution_service_machine)"/>
@@ -104,7 +105,8 @@
 		<arg name="robot_state_machine" value="$(arg robot_state_machine)"/>
 		<arg name="joint_trajectory_machine" value="$(arg joint_trajectory_machine)"/>
 		
-		<arg name="robot_state_publisher_machine" default="$(arg robot_state_publisher_machine)" />
+		<arg name="robot_state_publisher_machine" default="$(arg robot_state_publisher_machine)"
+			/>
 		<arg name="move_group_machine" value="$(arg move_group_machine)"/>
 	</include>
 </launch>
