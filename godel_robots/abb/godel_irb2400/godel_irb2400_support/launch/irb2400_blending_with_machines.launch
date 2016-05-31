@@ -1,0 +1,110 @@
+<?xml version="1.0"?>
+<launch>
+	<!-- arguments -->
+	<arg name="sim_robot" default="true"/>
+	<arg name="robot_ip" unless="$(arg sim_robot)" />
+	<arg name="sim_sensor" default="true"/>
+	<arg name="robot_model_plugin" default="abb_irb2400_descartes/AbbIrb2400RobotModel"/>
+	
+	<arg name="process_plan_machine" default="GENI2" />
+	<arg name="process_path_generator_machine" default="GENI0" />
+	<arg name="scan_process_execution_machine" default="GENI3" />
+	<arg name="mango_wrapper_machine" default="GENI1" />
+	<arg name="polygon_offset_machine" default="GENI0" />
+	<arg name="blend_process_execution_machine" default="GENI3" />
+	<arg name="point_cloud_generator_machine" default="SwRI" />
+	<arg name="SIM_industrial_robot_simulator_machine" default="User" />
+	<arg name="SIM_world_to_sim_publisher_machine" default="User" />
+	<arg name="SIM_joint_trajectory_action_machine" default="User" />
+	<arg name="SIM_simulator_service_machine" default="User" />
+	<arg name="SIM_robot_state_publisher_machine" default="User" />
+	<arg name="robot_state_machine" default="GENI2" />
+	<arg name="robot_state_publisher_machine" default="GENI2" />
+	<arg name="surface_blending_service_machine" default="GENI2" />
+	<arg name="move_group_machine" default="GENI2" />
+	<arg name="path_execution_service_machine" default="GENI2" />
+	<arg name="joint_trajectory_machine" default="GENI2" />
+	<arg name="ftp_interface_machine" default="GENI2" />
+	<arg name="industrial_robot_simulator_machine" default="User"/>
+	<arg name="rviz_machine" default="User"/>
+	
+	
+	<machine name="GENI0" address="10.8.0.10" env-loader="/users/gr5yf/Git/USIgniteRobotic/utility/scripts/env-loaderGENI0.sh"
+		user="gr5yf"/>
+	<machine name="GENI1" address="10.8.0.20" env-loader="/users/gr5yf/Git/USIgniteRobotic/utility/scripts/env-loaderGENI1.sh"
+		user="gr5yf"/>
+	<machine name="GENI2" address="10.8.0.30" env-loader="/users/gr5yf/Git/USIgniteRobotic/utility/scripts/env-loaderGENI2.sh"
+		user="gr5yf"/>
+	<machine name="GENI3" address="10.8.0.40" env-loader="/users/gr5yf/Git/USIgniteRobotic/utility/scripts/env-loaderGENI3.sh"
+		user="gr5yf"/>
+	<machine name="SwRI" address="10.8.0.50" env-loader="/home/gr5yf/Git/USIgniteRobotic/utility/scripts/env-loaderSwRI.sh"
+		user="gr5yf" password="rosindustrial1234"/>
+	<machine name="User" address="10.8.0.60" env-loader="/home/reza/repositories/git/USIgniteRobotic/utility/scripts/env-loaderUser.sh"
+		user="reza" default="true"/>
+	<!-- Brings up action interface for simple trajectory execution - used by laser scanner
+		process execution -->
+	<node name="path_execution_service" pkg="godel_path_execution" type="path_execution_service_node"
+		machine="$(arg path_execution_service_machine)"/>
+	
+	<!-- Launches the blend/scan process planners: requires descartes plugin for the robot
+		model -->
+	<include file="$(find godel_process_planning)/launch/process_planning.launch">
+		<arg name="robot_model_plugin" value="$(arg robot_model_plugin)"/>
+		<arg name="process_plan_machine" value="$(arg process_plan_machine)"/>
+	</include>
+	
+	<!-- Process execution nodes: These monitor the state of robot's execution of the
+		planned path. They can be, and in this case are, robot or vendor specific -->
+	<group>
+		<remap from="simulate_path" to="simulation/simulate_trajectory"/>
+		<node name="blend_process_execution" pkg="godel_process_execution" type="abb_blend_process_service_node"
+			machine="$(arg blend_process_execution_machine)"/>
+		<node name="scan_process_execution" pkg="godel_process_execution" type="keyence_process_service_node"
+			machine="$(arg scan_process_execution_machine)"/>
+	</group>
+	<!-- Bring up simulated robot that can be visualized under the tf namespace 'simulation'
+		Allows for previewing paths generated before execution. -->
+	<include file="$(find industrial_robot_simulator_service)/launch/start_simulation_server.launch">
+		<arg name="SIM_robot_state_publisher_machine" value="$(arg SIM_robot_state_publisher_machine)"/>
+		<arg name="SIM_world_to_sim_publisher_machine" value="$(arg SIM_world_to_sim_publisher_machine)"/>
+		<arg name="SIM_joint_trajectory_action_machine" value="$(arg SIM_joint_trajectory_action_machine)"/>
+		<arg name="SIM_industrial_robot_simulator_machine" value="$(arg SIM_industrial_robot_simulator_machine)"/>
+		<arg name="SIM_simulator_service_machine" value="$(arg SIM_simulator_service_machine)"/>
+		
+	</include>
+	
+	<!-- Brings up the core blending service: this includes the tool path planners for
+		both the blender and the laser scanner. -->
+	<include file="$(find godel_surface_detection)/launch/godel_core.launch">
+		<arg name="config_path" value="$(find godel_irb2400_support)/config"/>
+		<arg name="surface_blending_service_machine" value="$(arg surface_blending_service_machine)"/>
+		<arg name="process_path_generator_machine" value="$(arg process_path_generator_machine)"/>
+		<arg name="polygon_offset_machine" value="$(arg polygon_offset_machine)"/>
+	</include>
+	
+	<!-- If the user specifies a 'fake' sensor, publish fake data clouds -->
+	<group if="$(arg sim_sensor)">
+		<remap from="generated_cloud" to="sensor_point_cloud"/>
+		<node pkg="godel_surface_detection" type="point_cloud_generator_node" name="point_cloud_generator_node"
+			machine="$(arg point_cloud_generator_machine)">
+			<rosparam command="load" file="$(find godel_irb2400_support)/config/point_cloud_descriptions.yaml"/>
+		</node>
+	</group>
+	
+	<!-- rviz w/ specified configuration -->
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find godel_irb2400_support)/rviz/irb2400_blending.rviz"
+		output="screen" launch-prefix="nice" required="true" machine="$(arg rviz_machine)"/>
+	<!-- Bring up the MoveIt interface to the real or simulated robot -->
+	<include file="$(find godel_irb2400_moveit_config)/launch/moveit_planning_execution.launch">
+		<arg name="rviz" value="false"/>
+		<arg name="sim" value="$(arg sim_robot)"/>
+		<arg name="robot_ip" value="$(arg robot_ip)" unless="$(arg sim_robot)"/>
+		
+		<arg name="ftp_interface_machine" value="$(arg ftp_interface_machine)"/>
+		<arg name="robot_state_machine" value="$(arg robot_state_machine)"/>
+		<arg name="joint_trajectory_machine" value="$(arg joint_trajectory_machine)"/>
+		
+		<arg name="robot_state_publisher_machine" default="$(arg robot_state_publisher_machine)" />
+		<arg name="move_group_machine" value="$(arg move_group_machine)"/>
+	</include>
+</launch>
