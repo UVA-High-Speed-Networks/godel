@@ -125,12 +125,12 @@ if(REMOTE_FTP_DOWNLOADER){
 	ofh << req.file_content;
 	ofh.flush();
 
-	file_count++;
-	std::string a=patch::to_string(file_count);
-	std::ofstream temp_ofh(("/home/reza/shareVB/temp_traj_"+a+".mod").c_str());
-	temp_ofh << req.file_content;
-	temp_ofh.flush();
-	temp_ofh.close();
+	//file_count++;
+	//std::string a=patch::to_string(file_count);
+	//std::ofstream temp_ofh(("/home/reza/shareVB/temp_traj_"+a+".mod").c_str());
+	//temp_ofh << req.file_content;
+	//temp_ofh.flush();
+	//temp_ofh.close();
 
 
 }

@@ -18,13 +18,13 @@
 	<arg name="SIM_joint_trajectory_action_machine" default="User" />
 	<arg name="SIM_simulator_service_machine" default="User" />
 	<arg name="SIM_robot_state_publisher_machine" default="User" />
-	<arg name="robot_state_machine" default="GENI2" />
-	<arg name="robot_state_publisher_machine" default="GENI2" />
+	<arg name="robot_state_machine" default="SwRI" />
+	<arg name="robot_state_publisher_machine" default="SwRI" />
 	<arg name="surface_blending_service_machine" default="GENI2" />
 	<arg name="move_group_machine" default="GENI2" />
 	<arg name="path_execution_service_machine" default="GENI2" />
-	<arg name="joint_trajectory_machine" default="GENI2" />
-	<arg name="ftp_interface_machine" default="GENI2" />
+	<arg name="joint_trajectory_machine" default="SwRI"/>
+	<arg name="ftp_interface_machine" default="SwRI" />
 	<arg name="industrial_robot_simulator_machine" default="User"/>
 	<arg name="rviz_machine" default="User"/>
 	
