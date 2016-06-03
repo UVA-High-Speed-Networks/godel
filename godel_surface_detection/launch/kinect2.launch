@@ -4,5 +4,6 @@
   <include file="$(find kinect2_bridge)/launch/kinect2_bridge.launch" >
     <arg name="fps_limit" value="2" />
     <arg name="publish_tf" value="true"/>
+    <arg name="base_name" value="kinect2" />
   </include>
 </launch>
