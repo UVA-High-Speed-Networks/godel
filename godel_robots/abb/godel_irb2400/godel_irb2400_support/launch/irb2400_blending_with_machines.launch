@@ -27,6 +27,9 @@
 	<arg name="ftp_interface_machine" default="SwRI" />
 	<arg name="industrial_robot_simulator_machine" default="User"/>
 	<arg name="rviz_machine" default="User"/>
+    <arg name="kinect_machine" default="Asus"/>
+    <!--  Kinect node has 4 nodes which all be running in the same computer, kinect2_bridge,kinect2_points_xyzrgb_sd,kinect2_points_xyzrgb_qhd,kinect2_points_xyzrgb_hd -->	
+	
 	
 	
 	<machine name="GENI0" address="10.8.0.10" env-loader="/users/gr5yf/Git/USIgniteRobotic/utility/scripts/env-loaderGENI0.sh"
@@ -106,8 +109,7 @@
 		<arg name="robot_state_machine" value="$(arg robot_state_machine)"/>
 		<arg name="joint_trajectory_machine" value="$(arg joint_trajectory_machine)"/>
 		
-		<arg name="robot_state_publisher_machine" default="$(arg robot_state_publisher_machine)"
-			/>
+		<arg name="robot_state_publisher_machine" value="$(arg robot_state_publisher_machine)"/>
 		<arg name="move_group_machine" value="$(arg move_group_machine)"/>
 	</include>
 	
@@ -121,4 +123,8 @@
 		<param name="machine_name" value="User" type="str"/>
 		
 	</node>
+	
+	<include unless="$(arg sim_sensor)" file="$(find godel_surface_detection)/launch/kinect2.launch">
+		<arg name="machine" value="$(arg kinect_machine)"/>
+	</include>
 </launch>
