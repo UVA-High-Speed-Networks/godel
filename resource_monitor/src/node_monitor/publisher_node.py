@@ -21,8 +21,11 @@ def data_collector(process_name, write_to_file, sample_interval, net_interface, 
     pid_list = psutil.pids();
     my_process = [];
     for p in pid_list:
-        if psutil.Process(p).name() in  process_name:
-            my_process.append(psutil.Process(p))
+        try:
+            if psutil.Process(p).name() in  process_name:
+                my_process.append(psutil.Process(p))
+        except NoSuchProcess:
+            pass        
             
             
  
