@@ -1,0 +1,13 @@
+#! /usr/bin/env python
+import rospy
+import node_monitor.publisher_node
+
+
+if __name__ == '__main__':
+    rospy.init_node('resource_monitor', anonymous=True)
+    process_name=rospy.get_param('~process_name')
+    write_to_file=rospy.get_param('~write_to_file')
+    sample_interval=rospy.get_param('~sample_interval')
+    net_interface=rospy.get_param('~net_interface')
+    machine_name=rospy.get_param('~machine_name')
+    node_monitor.publisher_node.data_collector(process_name,write_to_file,sample_interval,net_interface,machine_name);

@@ -40,9 +40,9 @@
 	<machine name="SwRI" address="10.8.0.50" env-loader="/home/gr5yf/Git/USIgniteRobotic/utility/scripts/env-loaderSwRI.sh"
 		user="gr5yf" password="rosindustrial1234"/>
 	<machine name="User" address="10.8.0.60" env-loader="/home/reza/repositories/git/USIgniteRobotic/utility/scripts/env-loaderUser.sh"
-	user="reza" password="a" default="true">
+		user="reza" password="a" default="true">
 	</machine>
-		<!-- Brings up action interface for simple trajectory execution - used by laser scanner
+	<!-- Brings up action interface for simple trajectory execution - used by laser scanner
 		process execution -->
 	<node name="path_execution_service" pkg="godel_path_execution" type="path_execution_service_node"
 		machine="$(arg path_execution_service_machine)"/>
@@ -109,4 +109,13 @@
 			/>
 		<arg name="move_group_machine" value="$(arg move_group_machine)"/>
 	</include>
+	
+	<node name="resource_monitor" pkg="resource_monitor" type="hello" output="screen">
+		<param name="process_name" value="[rviz,robot_state_publisher]" type="str"/>
+		<param name="write_to_file" value="false" type="bool"/>
+		<param name="sample_interval" value="5" type="int"/>
+		<param name="net_interface" value="tun0" type="str"/>
+		<param name="machine_name" value="User" type="str"/>		
+		
+	</node>
 </launch>
