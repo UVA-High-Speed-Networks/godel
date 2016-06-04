@@ -24,7 +24,7 @@ def data_collector(process_name, write_to_file, sample_interval, net_interface, 
         try:
             if psutil.Process(p).name() in  process_name:
                 my_process.append(psutil.Process(p))
-        except NoSuchProcess:
+        except psutil.NoSuchProcess:
             pass        
             
             
