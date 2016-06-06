@@ -3,11 +3,12 @@
   <arg name="machine" default="localhost"/>
   <remap from="/kinect2/hd/points" to="/sensor_point_cloud"/>
   <include file="$(find kinect2_bridge)/launch/kinect2_bridge.launch" >
-    <arg name="fps_limit" value="2" />
+    <arg name="fps_limit" value="1" />
     <arg name="publish_tf" value="true"/>
-    <!-- <arg name="base_name" value="kinect2" />
+    <arg name="base_name" value="kinect2" />
     <arg name="machine" value="$(arg machine)"/>
     <arg name="use_machine" value="false" /> 
-    <arg name="use_nodelet" value="true" /> -->	   
+    <arg name="use_nodelet" value="true" />
+    <arg name="queue_size" value="5" />
   </include>
 </launch>
