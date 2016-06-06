@@ -70,6 +70,7 @@ RobotScan::RobotScan()
   params_.reachable_scan_points_ratio = 0.5f;
   params_.num_scan_points = 20;
   params_.stop_on_planning_error = true;
+  source_to_target_tf_permanent=NULL;
 }
 
 bool RobotScan::init()
@@ -253,7 +254,15 @@ int RobotScan::scan(bool move_only)
         sensor_msgs::PointCloud2ConstPtr msg = ros::topic::waitForMessage<sensor_msgs::PointCloud2>(
             params_.scan_topic, ros::Duration(WAIT_MSG_DURATION));
         pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_ptr(new pcl::PointCloud<pcl::PointXYZ>());
-        tf::StampedTransform source_to_target_tf;
+        if(i==1){
+        	if (source_to_target_tf_permanent!=NULL)
+        	{
+        		delete source_to_target_tf_permanent;
+        	}
+        	source_to_target_tf_permanent =new tf::StampedTransform();
+        }
+        //tf::StampedTransform source_to_target_tf;
+
         if (msg)
         {
           ROS_INFO_STREAM("Cloud message received, converting to target frame '"
@@ -272,8 +281,8 @@ int RobotScan::scan(bool move_only)
             try
             {
               tf_listener_ptr_->lookupTransform(params_.scan_target_frame, msg->header.frame_id,
-                                                ros::Time(0), source_to_target_tf);
-              pcl_ros::transformPointCloud(*cloud_ptr, *cloud_ptr, source_to_target_tf);
+                                                ros::Time(0), *source_to_target_tf_permanent);
+              pcl_ros::transformPointCloud(*cloud_ptr, *cloud_ptr, *source_to_target_tf_permanent);
             }
             catch (tf::LookupException& e)
             {

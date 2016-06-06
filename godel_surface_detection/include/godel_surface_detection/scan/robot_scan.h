@@ -47,6 +47,7 @@ public:
   static const double MIN_TRAJECTORY_TIME_STEP;
   static const double MIN_JOINT_VELOCITY;
 
+
 public:
   typedef boost::function<void(pcl::PointCloud<pcl::PointXYZ>& cloud)> ScanCallback;
 
@@ -87,6 +88,9 @@ protected:
 
 public: // parameters
   godel_msgs::RobotScanParameters params_;
+
+private:
+  tf::StampedTransform* source_to_target_tf_permanent;
 };
 
 } /* namespace detection */
