@@ -29,3 +29,4 @@ devel
 # mongodb instance
 **/default_warehouse_mongo_db/
 
+log.txt
