@@ -53,7 +53,7 @@ def data_collector(process_name, write_to_file, sample_interval, net_interface, 
         for m in my_process:        
             cpu_usage = m.cpu_percent();
             
-            vms = m.memory_info().vms;
+            rss = m.memory_info().rss;
             
             sent_rate=0;
             rec_rate=0;
@@ -69,7 +69,7 @@ def data_collector(process_name, write_to_file, sample_interval, net_interface, 
                 sent_rate=sent_rate/occurance;
                 rec_rate=rec_rate/occurance;         
                           
-            to_send_str = " %s %s %s %s %s %s %s" % (rospy.get_time(), m.name(), m.pid, cpu_usage, vms, sent_rate, rec_rate)  
+            to_send_str = " %s %s %s %s %s %s %s" % (rospy.get_time(), m.name(), m.pid, cpu_usage, rss, sent_rate, rec_rate)  
             pub.publish(to_send_str)
             
             
