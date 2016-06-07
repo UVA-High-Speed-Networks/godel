@@ -138,8 +138,8 @@
 	
 	
 	<node name="resource_monitor_User" pkg="resource_monitor" type="hello" output="screen"
-		machine="User" >
-		<param name="process_name" value="[rviz,robot_state_publisher,industrial_robot_simulator,static_transform_publisher,joint_trajectory_action,simulator_service_node]"
+		 >
+		<param name="process_name" value="[rviz,industrial_robot_simulator,static_transform_publisher,joint_trajectory_action,simulator_service_node,robot_state_publisher]"
 			type="str"/>
 		<param name="write_to_file" value="false" type="bool"/>
 		<param name="sample_interval" value="1" type="int"/>
@@ -147,7 +147,7 @@
 		<param name="machine_name" value="User" type="str"/>
 		
 	</node>
-	
+	<!-- 
 	<node name="resource_monitor_GENI0" pkg="resource_monitor" type="hello" output="screen"
 		machine="GENI0" >
 		<param name="process_name" value="[process_path_generator_node,godel_polygon_offset_node]"
@@ -199,8 +199,9 @@
 		<param name="sample_interval" value="1" type="int"/>
 		<param name="net_interface" value="tun0" type="str"/>
 		<param name="machine_name" value="User" type="str"/>
+        <param name ="/use_sim_time" value="true"/>		
 		
-	</node>	
+	</node> -->	
 	
 	<include unless="$(arg sim_sensor)" file="$(find godel_surface_detection)/launch/kinect2.launch">
 		<arg name="machine" value="$(arg kinect_machine)"/>
