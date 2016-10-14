@@ -139,7 +139,7 @@
 	
 	<node name="resource_monitor_User" pkg="resource_monitor" type="hello" output="screen"
 		 >
-		<param name="process_name" value="[rviz,industrial_robot_simulator,static_transform_publisher,joint_trajectory_action,simulator_service_node,robot_state_publisher]"
+		<param name="process_name" value="[rviz,python,static_transform_publisher,joint_trajectory_action,simulator_service_node,robot_state_publisher]"
 			type="str"/>
 		<param name="write_to_file" value="false" type="bool"/>
 		<param name="sample_interval" value="1" type="int"/>

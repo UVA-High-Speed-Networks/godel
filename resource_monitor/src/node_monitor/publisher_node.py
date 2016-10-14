@@ -36,7 +36,7 @@ def data_collector(process_name, write_to_file, sample_interval, net_interface, 
     pub = rospy.Publisher('chatter', String, queue_size=10)
     
     
-    p = Popen(['sudo', 'nethogs', '-t', net_interface], stdout=PIPE, bufsize=1, close_fds=ON_POSIX)
+    p = Popen(['sudo', 'nethogs', '-t','-d',str(sample_interval), net_interface], stdout=PIPE, bufsize=1, close_fds=ON_POSIX)
     q = Queue()
     t = Thread(target=enqueue_output, args=(p.stdout, q))
     t.daemon = True  # thread dies with the program
