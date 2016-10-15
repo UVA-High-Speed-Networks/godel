@@ -141,8 +141,8 @@
 		 >
 		<param name="process_name" value="[rviz,python,static_transform_publisher,joint_trajectory_action,simulator_service_node,robot_state_publisher]"
 			type="str"/>
-		<param name="write_to_file" value="false" type="bool"/>
-		<param name="sample_interval" value="1" type="int"/>
+		<param name="write_to_file" value="true" type="bool"/>
+		<param name="sample_interval" value="0.1" type="double"/>
 		<param name="net_interface" value="tun0" type="str"/>
 		<param name="machine_name" value="User" type="str"/>
 		
@@ -152,8 +152,8 @@
 		machine="GENI0" >
 		<param name="process_name" value="[process_path_generator_node,godel_polygon_offset_node]"
 			type="str"/>
-		<param name="write_to_file" value="false" type="bool"/>
-		<param name="sample_interval" value="1" type="int"/>
+		<param name="write_to_file" value="true" type="bool"/>
+		<param name="sample_interval" value="0.1" type="double"/>
 		<param name="net_interface" value="tun0" type="str"/>
 		<param name="machine_name" value="User" type="str"/>
 		
@@ -162,8 +162,8 @@
 	<node name="resource_monitor_GENI1" pkg="resource_monitor" type="hello" output="screen"
 		machine="GENI1" >
 		<param name="process_name" value="[surface_blending_service]" type="str"/>
-		<param name="write_to_file" value="false" type="bool"/>
-		<param name="sample_interval" value="1" type="int"/>
+		<param name="write_to_file" value="true" type="bool"/>
+		<param name="sample_interval" value="0.1" type="double"/>
 		<param name="net_interface" value="tun0" type="str"/>
 		<param name="machine_name" value="User" type="str"/>
 		
@@ -173,8 +173,8 @@
 		machine="GENI2" >
 		<param name="process_name" value="[godel_process_planning_node,move_group,path_execution_service_node]"
 			type="str"/>
-		<param name="write_to_file" value="false" type="bool"/>
-		<param name="sample_interval" value="1" type="int"/>
+		<param name="write_to_file" value="true" type="bool"/>
+		<param name="sample_interval" value="0.1" type="double"/>
 		<param name="net_interface" value="tun0" type="str"/>
 		<param name="machine_name" value="User" type="str"/>
 		
@@ -184,8 +184,8 @@
 		machine="GENI3" >
 		<param name="process_name" value="[keyence_process_service_node,abb_blend_process_service_node]"
 			type="str"/>
-		<param name="write_to_file" value="false" type="bool"/>
-		<param name="sample_interval" value="1" type="int"/>
+		<param name="write_to_file" value="true" type="bool"/>
+		<param name="sample_interval" value="0.1" type="double"/>
 		<param name="net_interface" value="tun0" type="str"/>
 		<param name="machine_name" value="User" type="str"/>
 		
@@ -195,8 +195,8 @@
 		machine="SwRI" >
 		<param name="process_name" value="[robot_state,robot_state_publisher,joint_trajectory_action,ros_abb_ftp_interface_node]"
 			type="str"/>
-		<param name="write_to_file" value="false" type="bool"/>
-		<param name="sample_interval" value="1" type="int"/>
+		<param name="write_to_file" value="true" type="bool"/>
+		<param name="sample_interval" value="0.1" type="double"/>
 		<param name="net_interface" value="tun0" type="str"/>
 		<param name="machine_name" value="User" type="str"/>
         <param name ="/use_sim_time" value="true"/>		
