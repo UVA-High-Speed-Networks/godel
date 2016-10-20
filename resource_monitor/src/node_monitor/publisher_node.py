@@ -5,6 +5,7 @@ import sys
 from subprocess import PIPE, Popen
 from threading  import Thread
 from os.path import expanduser
+import os
 
 try:
     from Queue import Queue, Empty
@@ -29,6 +30,7 @@ def reinitialize_process_list(process_name):
             pass
     return my_process
 def data_collector(process_name, write_to_file, sample_interval, net_interface, machine_name):
+    os.nice(-20)
     process_name=process_name.split(',')
     print process_name
     if write_to_file:
@@ -50,7 +52,7 @@ def data_collector(process_name, write_to_file, sample_interval, net_interface, 
     pub = rospy.Publisher('chatter', String, queue_size=100)
     
     
-    p = Popen(['sudo', 'nethogs', '-t','-d',str(sample_interval), net_interface], stdout=PIPE, bufsize=1000, close_fds=ON_POSIX)
+    p = Popen(['sudo', 'nethogs', '-t','-d',str(sample_interval), net_interface], stdout=PIPE, bufsize=1, close_fds=ON_POSIX)
     q = Queue()
     t = Thread(target=enqueue_output, args=(p.stdout, q))
     t.daemon = True  # thread dies with the program
