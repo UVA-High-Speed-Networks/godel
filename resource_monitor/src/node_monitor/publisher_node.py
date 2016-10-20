@@ -14,7 +14,6 @@ ON_POSIX = 'posix' in sys.builtin_module_names
 
 def enqueue_output(out, queue):
     for line in iter(out.readline, b''):
-        print line
         queue.put(line)
     
     out.close()
