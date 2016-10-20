@@ -52,20 +52,20 @@
 	
 	
 	
-	<machine name="GENI0" address="10.8.0.10" env-loader="/users/gr5yf/Git/USIgniteRobotic/utility/scripts/env-loaderGENI0.sh"
+	<machine name="GENI0" address="155.99.144.30" env-loader="/users/gr5yf/Git/USIgniteRobotic/utility/scripts/env-loaderGENI0.sh"
 		user="gr5yf"/>
-	<machine name="GENI1" address="10.8.0.20" env-loader="/users/gr5yf/Git/USIgniteRobotic/utility/scripts/env-loaderGENI1.sh"
+	<machine name="GENI1" address="155.99.144.34" env-loader="/users/gr5yf/Git/USIgniteRobotic/utility/scripts/env-loaderGENI1.sh"
 		user="gr5yf"/>
-	<machine name="GENI2" address="10.8.0.30" env-loader="/users/gr5yf/Git/USIgniteRobotic/utility/scripts/env-loaderGENI2.sh"
+	<machine name="GENI2" address="155.99.144.47" env-loader="/users/gr5yf/Git/USIgniteRobotic/utility/scripts/env-loaderGENI2.sh"
 		user="gr5yf"/>
-	<machine name="GENI3" address="10.8.0.40" env-loader="/users/gr5yf/Git/USIgniteRobotic/utility/scripts/env-loaderGENI3.sh"
+	<machine name="GENI3" address="155.99.144.37" env-loader="/users/gr5yf/Git/USIgniteRobotic/utility/scripts/env-loaderGENI3.sh"
 		user="gr5yf"/>
-	<machine name="SwRI" address="10.8.0.50" env-loader="/home/gr5yf/Git/USIgniteRobotic/utility/scripts/env-loaderSwRI.sh"
+	<machine name="SwRI" address="128.143.63.199" env-loader="/home/gr5yf/Git/USIgniteRobotic/utility/scripts/env-loaderSwRI.sh"
 		user="gr5yf" password="rosindustrial1234"/>
-	<machine name="User" address="10.8.0.60" env-loader="/home/reza/repositories/git/USIgniteRobotic/utility/scripts/env-loaderUser.sh"
+	<machine name="User" address="128.143.137.196" env-loader="/home/reza/repositories/git/USIgniteRobotic/utility/scripts/env-loaderUser.sh"
 		user="reza" password="a" default="true">
 	</machine>
-	<machine name="Asus" address="10.8.0.70" env-loader="/home/reza/Git/USIgniteRobotic/utility/scripts/env-loaderAsus.sh"
+	<machine name="Asus" address="128.143.67.19" env-loader="/home/reza/Git/USIgniteRobotic/utility/scripts/env-loaderAsus.sh"
 		user="reza" password="a">
 	</machine>
 	<!-- Brings up action interface for simple trajectory execution - used by laser scanner
@@ -141,9 +141,9 @@
 		 >
 		<param name="process_name" value="rviz,static_transform_publisher,joint_trajectory_action,simulator_service_node,robot_state_publisher"
 			type="str"/>
-		<param name="write_to_file" value="false" type="bool"/>
+		<param name="write_to_file" value="true" type="bool"/>
 		<param name="sample_interval" value="0.1" type="double"/>
-		<param name="net_interface" value="tun0" type="str"/>
+		<param name="net_interface" value="eth0" type="str"/>
 		<param name="machine_name" value="User" type="str"/>
 		
 	</node>
@@ -154,7 +154,7 @@
 			type="str"/>
 		<param name="write_to_file" value="true" type="bool"/>
 		<param name="sample_interval" value="0.1" type="double"/>
-		<param name="net_interface" value="tun0" type="str"/>
+		<param name="net_interface" value="eth0" type="str"/>
 		<param name="machine_name" value="User" type="str"/>
 		
 	</node>
@@ -164,7 +164,7 @@
 		<param name="process_name" value="surface_blending_service" type="str"/>
 		<param name="write_to_file" value="true" type="bool"/>
 		<param name="sample_interval" value="0.1" type="double"/>
-		<param name="net_interface" value="tun0" type="str"/>
+		<param name="net_interface" value="eth0" type="str"/>
 		<param name="machine_name" value="User" type="str"/>
 		
 	</node>
@@ -175,7 +175,7 @@
 			type="str"/>
 		<param name="write_to_file" value="true" type="bool"/>
 		<param name="sample_interval" value="0.1" type="double"/>
-		<param name="net_interface" value="tun0" type="str"/>
+		<param name="net_interface" value="eth0" type="str"/>
 		<param name="machine_name" value="User" type="str"/>
 		
 	</node>
@@ -186,7 +186,7 @@
 			type="str"/>
 		<param name="write_to_file" value="true" type="bool"/>
 		<param name="sample_interval" value="0.1" type="double"/>
-		<param name="net_interface" value="tun0" type="str"/>
+		<param name="net_interface" value="eth0" type="str"/>
 		<param name="machine_name" value="User" type="str"/>
 		
 	</node>
@@ -197,7 +197,7 @@
 			type="str"/>
 		<param name="write_to_file" value="true" type="bool"/>
 		<param name="sample_interval" value="0.1" type="double"/>
-		<param name="net_interface" value="tun0" type="str"/>
+		<param name="net_interface" value="eth1" type="str"/>
 		<param name="machine_name" value="User" type="str"/>
         <param name ="/use_sim_time" value="true"/>		
 		
