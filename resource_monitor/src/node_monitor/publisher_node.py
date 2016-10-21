@@ -30,7 +30,7 @@ def reinitialize_process_list(process_name):
             pass
     return my_process
 def data_collector(process_name, write_to_file, sample_interval, net_interface, machine_name):
-    os.nice(-20)
+    #os.nice(-20)
     process_name=process_name.split(',')
     print process_name
     if write_to_file:
