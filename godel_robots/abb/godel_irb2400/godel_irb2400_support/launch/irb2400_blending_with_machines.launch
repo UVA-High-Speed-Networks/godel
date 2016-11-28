@@ -52,20 +52,20 @@
 	
 	
 	
-	<machine name="GENI0" address="10.8.0.10" env-loader="/users/gr5yf/Git/USIgniteRobotic/utility/scripts/env-loaderGENI0.sh"
+	<machine name="GENI0" address="155.99.144.30" env-loader="/users/gr5yf/Git/USIgniteRobotic/utility/scripts/env-loaderGENI0.sh"
 		user="gr5yf"/>
-	<machine name="GENI1" address="10.8.0.20" env-loader="/users/gr5yf/Git/USIgniteRobotic/utility/scripts/env-loaderGENI1.sh"
+	<machine name="GENI1" address="155.99.144.34" env-loader="/users/gr5yf/Git/USIgniteRobotic/utility/scripts/env-loaderGENI1.sh"
 		user="gr5yf"/>
-	<machine name="GENI2" address="10.8.0.30" env-loader="/users/gr5yf/Git/USIgniteRobotic/utility/scripts/env-loaderGENI2.sh"
+	<machine name="GENI2" address="155.99.144.47" env-loader="/users/gr5yf/Git/USIgniteRobotic/utility/scripts/env-loaderGENI2.sh"
 		user="gr5yf"/>
-	<machine name="GENI3" address="10.8.0.40" env-loader="/users/gr5yf/Git/USIgniteRobotic/utility/scripts/env-loaderGENI3.sh"
+	<machine name="GENI3" address="155.99.144.37" env-loader="/users/gr5yf/Git/USIgniteRobotic/utility/scripts/env-loaderGENI3.sh"
 		user="gr5yf"/>
-	<machine name="SwRI" address="10.8.0.50" env-loader="/home/gr5yf/Git/USIgniteRobotic/utility/scripts/env-loaderSwRI.sh"
+	<machine name="SwRI" address="128.143.63.199" env-loader="/home/gr5yf/Git/USIgniteRobotic/utility/scripts/env-loaderSwRI.sh"
 		user="gr5yf" password="rosindustrial1234"/>
-	<machine name="User" address="10.8.0.60" env-loader="/home/reza/repositories/git/USIgniteRobotic/utility/scripts/env-loaderUser.sh"
+	<machine name="User" address="128.143.137.196" env-loader="/home/reza/repositories/git/USIgniteRobotic/utility/scripts/env-loaderUser.sh"
 		user="reza" password="a" default="true">
 	</machine>
-	<machine name="Asus" address="10.8.0.70" env-loader="/home/reza/Git/USIgniteRobotic/utility/scripts/env-loaderAsus.sh"
+	<machine name="Asus" address="128.143.67.19" env-loader="/home/reza/Git/USIgniteRobotic/utility/scripts/env-loaderAsus.sh"
 		user="reza" password="a">
 	</machine>
 	<!-- Brings up action interface for simple trajectory execution - used by laser scanner
@@ -139,67 +139,67 @@
 	
 	<node name="resource_monitor_User" pkg="resource_monitor" type="hello" output="screen"
 		 >
-		<param name="process_name" value="[rviz,python,static_transform_publisher,joint_trajectory_action,simulator_service_node,robot_state_publisher]"
+		<param name="process_name" value="rviz"
 			type="str"/>
-		<param name="write_to_file" value="false" type="bool"/>
-		<param name="sample_interval" value="1" type="int"/>
-		<param name="net_interface" value="tun0" type="str"/>
+		<param name="write_to_file" value="true" type="bool"/>
+		<param name="sample_interval" value="0.5" type="double"/>
+		<param name="net_interface" value="eth0" type="str"/>
 		<param name="machine_name" value="User" type="str"/>
 		
 	</node>
 	
 	<node name="resource_monitor_GENI0" pkg="resource_monitor" type="hello" output="screen"
 		machine="GENI0" >
-		<param name="process_name" value="[process_path_generator_node,godel_polygon_offset_node]"
+		<param name="process_name" value="process_path_generator_node"
 			type="str"/>
-		<param name="write_to_file" value="false" type="bool"/>
-		<param name="sample_interval" value="1" type="int"/>
-		<param name="net_interface" value="tun0" type="str"/>
+		<param name="write_to_file" value="true" type="bool"/>
+		<param name="sample_interval" value="0.5" type="double"/>
+		<param name="net_interface" value="eth0" type="str"/>
 		<param name="machine_name" value="User" type="str"/>
 		
 	</node>
 	
 	<node name="resource_monitor_GENI1" pkg="resource_monitor" type="hello" output="screen"
 		machine="GENI1" >
-		<param name="process_name" value="[surface_blending_service]" type="str"/>
-		<param name="write_to_file" value="false" type="bool"/>
-		<param name="sample_interval" value="1" type="int"/>
-		<param name="net_interface" value="tun0" type="str"/>
+		<param name="process_name" value="surface_blending_service" type="str"/>
+		<param name="write_to_file" value="true" type="bool"/>
+		<param name="sample_interval" value="0.5" type="double"/>
+		<param name="net_interface" value="eth0" type="str"/>
 		<param name="machine_name" value="User" type="str"/>
 		
 	</node>
 	
 	<node name="resource_monitor_GENI2" pkg="resource_monitor" type="hello" output="screen"
 		machine="GENI2" >
-		<param name="process_name" value="[godel_process_planning_node,move_group,path_execution_service_node]"
+		<param name="process_name" value="move_group"
 			type="str"/>
-		<param name="write_to_file" value="false" type="bool"/>
-		<param name="sample_interval" value="1" type="int"/>
-		<param name="net_interface" value="tun0" type="str"/>
+		<param name="write_to_file" value="true" type="bool"/>
+		<param name="sample_interval" value="0.5" type="double"/>
+		<param name="net_interface" value="eth0" type="str"/>
 		<param name="machine_name" value="User" type="str"/>
 		
 	</node>
 	
 	<node name="resource_monitor_GENI3" pkg="resource_monitor" type="hello" output="screen"
 		machine="GENI3" >
-		<param name="process_name" value="[keyence_process_service_node,abb_blend_process_service_node]"
+		<param name="process_name" value="abb_blend_process_service_node"
 			type="str"/>
-		<param name="write_to_file" value="false" type="bool"/>
-		<param name="sample_interval" value="1" type="int"/>
-		<param name="net_interface" value="tun0" type="str"/>
+		<param name="write_to_file" value="true" type="bool"/>
+		<param name="sample_interval" value="0.5" type="double"/>
+		<param name="net_interface" value="eth0" type="str"/>
 		<param name="machine_name" value="User" type="str"/>
 		
 	</node>
 	
 <node name="resource_monitor_SwRI" pkg="resource_monitor" type="hello" output="screen"
 		machine="SwRI" >
-		<param name="process_name" value="[robot_state,robot_state_publisher,joint_trajectory_action,ros_abb_ftp_interface_node]"
+		<param name="process_name" value="robot_state,robot_state_publisher,joint_trajectory_action,ros_abb_ftp_interface_node"
 			type="str"/>
-		<param name="write_to_file" value="false" type="bool"/>
-		<param name="sample_interval" value="1" type="int"/>
-		<param name="net_interface" value="tun0" type="str"/>
+		<param name="write_to_file" value="true" type="bool"/>
+		<param name="sample_interval" value="0.5" type="double"/>
+		<param name="net_interface" value="eth1" type="str"/>
 		<param name="machine_name" value="User" type="str"/>
-        <param name ="/use_sim_time" value="true"/>		
+       		<param name ="/use_sim_time" value="true"/>		
 		
 	</node>	
 	
