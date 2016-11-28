@@ -2,9 +2,9 @@
 <launch>
   <!-- arguments -->
   <arg name="config_path"/>
-  <arg name="surface_blending_service_machine" default=""/>  
-  <arg name="process_path_generator_machine" default=""/>
-  <arg name="polygon_offset_machine" default=""/>
+  <arg name="surface_blending_service_machine" default="localhost"/>  
+  <arg name="process_path_generator_machine" default="localhost"/>
+  <arg name="polygon_offset_machine" default="localhost"/>
 
     <!-- surface detection service -->
   <node name="surface_blending_service" pkg="godel_surface_detection" type="surface_blending_service" output="screen" machine="$(arg surface_blending_service_machine)">

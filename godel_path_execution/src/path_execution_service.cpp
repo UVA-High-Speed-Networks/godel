@@ -3,7 +3,7 @@
 
 const static std::string ACTION_SERVER_NAME = "joint_trajectory_action";
 const static double ACTION_EXTRA_WAIT_RATIO = 0.2;   // 20% past end of trajectory
-const static double ACTION_SERVICE_WAIT_TIME = 30.0; // seconds
+const static double ACTION_SERVICE_WAIT_TIME = 300000000000000000000000000000.0; // seconds
 const static char* const ACTION_CONNECTION_FAILED_MSG = "Could not connect to action server.";
 
 const static std::string THIS_SERVICE_NAME = "path_execution";
@@ -16,7 +16,7 @@ godel_path_execution::PathExecutionService::PathExecutionService(ros::NodeHandle
       THIS_SERVICE_NAME, &godel_path_execution::PathExecutionService::executionCallback, this);
 
   // Attempt to connect to the motion action service
-  if (!ac_.waitForServer(ros::Duration(ACTION_SERVICE_WAIT_TIME)))
+  if (!ac_.waitForServer())
   {
     ROS_ERROR_STREAM(ACTION_CONNECTION_FAILED_MSG);
     throw std::runtime_error(ACTION_CONNECTION_FAILED_MSG);

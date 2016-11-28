@@ -15,11 +15,11 @@
 		timing -->
 	<arg name="scale_factor" default="0.2"/>
 	
-	<arg name="SIM_robot_state_publisher_machine" default=""/>
-	<arg name="SIM_world_to_sim_publisher_machine" default=""/>
-	<arg name="SIM_joint_trajectory_action_machine" default=""/>
-	<arg name="SIM_industrial_robot_simulator_machine" default=""/>
-	<arg name="SIM_simulator_service_machine" default=""/>
+	<arg name="SIM_robot_state_publisher_machine" default="localhost"/>
+	<arg name="SIM_world_to_sim_publisher_machine" default="localhost"/>
+	<arg name="SIM_joint_trajectory_action_machine" default="localhost"/>
+	<arg name="SIM_industrial_robot_simulator_machine" default="localhost"/>
+	<arg name="SIM_simulator_service_machine" default="localhost"/>
 	
 	
 	

@@ -1,0 +1,11 @@
+#! /usr/bin/env python
+import rospy
+import topic_monitor.collector_node
+
+
+if __name__ == '__main__':
+    rospy.init_node('topic_statistic_collector', anonymous=True)
+    topic_names=rospy.get_param('~topic_names')
+    rospy.loginfo("Statistics for %s topics have been requested %d",topic_names,len(topic_names)) 
+    topic_monitor.collector_node.data_collector(topic_names)
+    

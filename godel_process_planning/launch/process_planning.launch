@@ -5,7 +5,7 @@
   <arg name="keyence_group" default="manipulator_keyence"/>
   <arg name="keyence_tcp" default="keyence_tcp_frame"/>
   <arg name="robot_model_plugin"/>
-  <arg name="process_plan_machine" default=""/>  
+  <arg name="process_plan_machine" default="localhost"/>  
   
   
 

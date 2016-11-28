@@ -12,13 +12,13 @@
 	<arg name="use_ftp" default="true"/>
 	
 	
-	<arg name="ftp_interface_machine" default="" />
-	<arg name="robot_state_machine" default="" />
-	<arg name="joint_trajectory_machine" default="" />
+	<arg name="ftp_interface_machine" default="localhost" />
+	<arg name="robot_state_machine" default="localhost" />
+	<arg name="joint_trajectory_machine" default="localhost" />
 	
-	<arg name="robot_state_publisher_machine" default="" />
+	<arg name="robot_state_publisher_machine" default="localhost" />
 	
-	<arg name="move_group_machine" default=""/>
+	<arg name="move_group_machine" default="localhost"/>
 	
 	<!-- load the robot_description parameter before launching ROS-I nodes -->
 	<include file="$(find godel_irb2400_moveit_config)/launch/planning_context.launch"
