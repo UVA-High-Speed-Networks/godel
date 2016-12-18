@@ -20,19 +20,19 @@
 	<!-- abb_blend_process_service_node -->
 	<arg name="point_cloud_generator_machine" default="SwRI" />
 	<!-- -->
-	<arg name="SIM_industrial_robot_simulator_machine" default="User" />
+	<arg name="SIM_industrial_robot_simulator_machine" default="GENI-Chicago" />
 	<!-- industrial_robot_simulator -->
-	<arg name="SIM_world_to_sim_publisher_machine" default="User" />
+	<arg name="SIM_world_to_sim_publisher_machine" default="GENI-Chicago" />
 	<!-- static_transform_publisher -->
-	<arg name="SIM_joint_trajectory_action_machine" default="User" />
+	<arg name="SIM_joint_trajectory_action_machine" default="GENI-Chicago" />
 	<!-- joint_trajectory_action -->
-	<arg name="SIM_simulator_service_machine" default="User" />
+	<arg name="SIM_simulator_service_machine" default="GENI-Chicago" />
 	<!-- simulator_service_node -->
-	<arg name="SIM_robot_state_publisher_machine" default="User" />
+	<arg name="SIM_robot_state_publisher_machine" default="GENI-Chicago" />
 	<!-- robot_state_publisher -->
-	<arg name="robot_state_machine" default="SwRI" />
+	<arg name="robot_state_machine" default="Asus" />
 	<!-- robot_state-->
-	<arg name="robot_state_publisher_machine" default="SwRI" />
+	<arg name="robot_state_publisher_machine" default="Asus" />
 	<!-- robot_state_publisher -->
 	<arg name="surface_blending_service_machine" default="GENI1" />
 	<!-- surface_blending_service -->
@@ -40,11 +40,12 @@
 	<!-- move_group -->
 	<arg name="path_execution_service_machine" default="GENI2" />
 	<!-- path_execution_service_node -->
-	<arg name="joint_trajectory_machine" default="SwRI"/>
+	<arg name="joint_trajectory_machine" default="Asus"/>
 	<!-- joint_trajectory_action -->
-	<arg name="ftp_interface_machine" default="SwRI" />
+	<arg name="ftp_interface_machine" default="Asus" />
 	<!-- ros_abb_ftp_interface_node -->
-	<arg name="rviz_machine" default="User"/>
+	<arg name="rviz_machine" default="Asus"/>
+        <arg name="autoblend_machine" default="GENI-Chicago"/>
 	<!-- rviz -->
 	<arg name="kinect_machine" default="Asus"/>
 	<!-- Kinect node has 4 nodes which all be running in the same computer, kinect2_bridge,kinect2_points_xyzrgb_sd,kinect2_points_xyzrgb_qhd,kinect2_points_xyzrgb_hd
@@ -60,18 +61,22 @@
 		user="gr5yf"/>
 	<machine name="GENI3" address="155.99.144.37" env-loader="/users/gr5yf/Git/USIgniteRobotic/utility/scripts/env-loaderGENI3.sh"
 		user="gr5yf"/>
-	<machine name="SwRI" address="128.143.63.199" env-loader="/home/gr5yf/Git/USIgniteRobotic/utility/scripts/env-loaderSwRI.sh"
+        <machine name="GENI-Chicago" address="192.170.230.84" env-loader="/users/gr5yf/Git/USIgniteRobotic/utility/scripts/env-loaderGENIChicago.sh" user="gr5yf"/>
+	<machine name="Asus" address="128.143.67.19" env-loader="/home/reza/Git/USIgniteRobotic/utility/scripts/env-loaderAsus.sh"
+		user="reza" password="a"/>
+
+	<!-- <machine name="SwRI" address="128.143.63.199" env-loader="/home/gr5yf/Git/USIgniteRobotic/utility/scripts/env-loaderSwRI.sh"
 		user="gr5yf" password="rosindustrial1234"/>
 	<machine name="User" address="128.143.137.196" env-loader="/home/reza/repositories/git/USIgniteRobotic/utility/scripts/env-loaderUser.sh"
-		user="reza" password="a" default="true">
-	</machine>
+		user="reza" password="a" default="true"/>
 	<machine name="Asus" address="128.143.67.19" env-loader="/home/reza/Git/USIgniteRobotic/utility/scripts/env-loaderAsus.sh"
-		user="reza" password="a">
-	</machine>
+		user="reza" password="a"/> -->
 	<!-- Brings up action interface for simple trajectory execution - used by laser scanner
 		process execution -->
 	<node name="path_execution_service" pkg="godel_path_execution" type="path_execution_service_node"
 		machine="$(arg path_execution_service_machine)"/>
+        <!-- <node name="auto_blend" pkg="godel_surface_detection" type="robot_auto_blending"
+		machine="$(arg autoblend_machine)"/> -->
 	
 	<!-- Launches the blend/scan process planners: requires descartes plugin for the robot
 		model -->
@@ -135,9 +140,7 @@
 		<arg name="move_group_machine" value="$(arg move_group_machine)"/>
 	</include>
 	
-	
-	
-	<node name="resource_monitor_User" pkg="resource_monitor" type="hello" output="screen"
+	<!--<node name="resource_monitor_User" pkg="resource_monitor" type="hello" output="screen"
 		 >
 		<param name="process_name" value="rviz"
 			type="str"/>
@@ -205,5 +208,6 @@
 	
 	<include unless="$(arg sim_sensor)" file="$(find godel_surface_detection)/launch/kinect2.launch">
 		<arg name="machine" value="$(arg kinect_machine)"/>
-	</include>
+	</include> 
+       -->
 </launch>

@@ -10,6 +10,7 @@
 #include <godel_param_helpers/godel_param_helpers.h>
 #include <fstream>
 #include <iostream>
+#include <fstream> 
 
 //Topic
 const static std::string SURFACE_DETECTION_SERVICE = "surface_detection";
@@ -49,6 +50,14 @@ int main(int argc, char** argv)
       GET_AVAILABLE_MOTION_PLANS_SERVICE);
   ros::ServiceClient sim_client_ = node_handle.serviceClient<godel_msgs::SelectMotionPlan>(SELECT_MOTION_PLAN_SERVICE);
 
+  std::ofstream myfile;
+  myfile.open ("/tmp/TimeRecord.txt");
+  ros::Time endTime;
+  ros::Time beginTime;
+  double scanTime,genPathTime,simPathTime,blendPathTime;
+  ros::Duration(2).sleep();
+  
+  
   while (ros::ok())
   {
     if (service_call_failure > MAX_SERVICE_CALL_FAILURE)
@@ -56,7 +65,7 @@ int main(int argc, char** argv)
       ROS_ERROR_STREAM("Service Call failures exceed the MAX_SERVICE_CALL_FAILURE");
       return -1;
     }
-
+    
     //Get parameters for surface detection
     param_srv.request.action = param_srv.request.GET_CURRENT_PARAMETERS;
     if (!param_client.call(param_srv))
@@ -65,7 +74,8 @@ int main(int argc, char** argv)
       service_call_failure++;
       continue;
     }
-
+    
+    beginTime = ros::Time::now();
     //Scan and detect surface
     surface_detection_srv.request.action = 3;
     surface_detection_srv.request.use_default_parameters = false;
@@ -77,7 +87,10 @@ int main(int argc, char** argv)
       service_call_failure++;
       continue;
     }
-
+    endTime = ros::Time::now();
+    scanTime  = endTime.toSec() - beginTime.toSec();
+    
+    beginTime = ros::Time::now();
     //Select all surface
     select_surface_req.action = select_surface_req.SELECT_ALL;
     if (!select_surface_client_.call(select_surface_req, select_surface_res))
@@ -98,15 +111,20 @@ int main(int argc, char** argv)
       service_call_failure++;
       continue;
     }
-
+    endTime = ros::Time::now();
+    genPathTime  = endTime.toSec() - beginTime.toSec();
+    
+    
+    
+    beginTime = ros::Time::now();
     if (!get_motion_plans_client_.call(motion_query_srv))
     {
       ROS_WARN_STREAM("Unable to call the "<<GET_AVAILABLE_MOTION_PLANS_SERVICE<<" service");
       service_call_failure++;
       continue;
     }
+    
     plan_names = motion_query_srv.response.names;
-
     //Blending Simulation
     for (std::size_t i = 0; i < plan_names.size(); ++i)
     {
@@ -120,8 +138,32 @@ int main(int argc, char** argv)
         continue;
       }
     }
+    endTime = ros::Time::now();
+    simPathTime  = endTime.toSec() - beginTime.toSec();
+    
+    //Blending Real
+    beginTime = ros::Time::now();
+    for (std::size_t i = 0; i < plan_names.size(); ++i)
+    {
+      motion_srv.request.name = plan_names[i];
+      motion_srv.request.simulate = false;
+      motion_srv.request.wait_for_execution = true;
+      if (!sim_client_.call(motion_srv))
+      {
+        ROS_WARN_STREAM("Unable to call the "<<SELECT_MOTION_PLAN_SERVICE<<" service");
+        service_call_failure++;
+        continue;
+      }
+    }
+    endTime = ros::Time::now();
+    blendPathTime  = endTime.toSec() - beginTime.toSec();
+    
+    myfile <<scanTime<<"-"<<genPathTime<<"-"<<simPathTime<<"-"<<blendPathTime<<"\n";
+    
     ros::spinOnce();
     loop_rate.sleep();
   }
+  myfile<<std::endl;
+  myfile.close();
   return 0;
 }
