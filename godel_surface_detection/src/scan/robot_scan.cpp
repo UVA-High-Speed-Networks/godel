@@ -21,10 +21,13 @@
 #include <pcl/filters/filter.h>
 #include <boost/assign/list_of.hpp>
 #include <boost/assert.hpp>
+#include <boost/lexical_cast.hpp>
 #include <math.h>
 #include <moveit/robot_state/conversions.h>
 #include <moveit/trajectory_processing/iterative_time_parameterization.h>
 #include <godel_param_helpers/godel_param_helpers.h>
+#include <pcl/io/pcd_io.h>
+#include <string>
 
 static const std::string DEFAULT_MOVEIT_PLANNER = "RRTConnectkConfigDefault";
 
@@ -281,6 +284,15 @@ int RobotScan::scan(bool move_only) {
 									"Transform lookup error, using source frame id '" << msg->header.frame_id << "'");
 						}
 					}
+                                       
+                                        
+                                        //pcl::io::savePCDFileASCII ("pcd"+boost::lexical_cast<std::string>(i)+".pcd", *cloud_ptr);
+                                        cloud_ptr->clear();
+                                        if (pcl::io::loadPCDFile<pcl::PointXYZ> ("pcd"+boost::lexical_cast<std::string>(i)+".pcd", *cloud_ptr) == -1) //* load the file
+  						{
+						    ROS_ERROR_STREAM ("Couldn't read pcd file \n");
+						    
+					         }
 
 					for (std::vector<ScanCallback>::iterator i =
 							callback_list_.begin(); i != callback_list_.end();

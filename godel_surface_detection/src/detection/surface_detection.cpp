@@ -473,7 +473,26 @@ bool SurfaceDetection::find_surfaces()
     segment_normals.erase(segment_normals.begin() + largest_index);
   }
 
+
+
+
   // applying fast triangulation
+int max1=-1,max2=-1;
+
+for (int i = 0; i < surface_clouds_.size(); i++){
+    int len=surface_clouds_[i]->width;
+    if(len>=max1){
+        max2=max1;
+        max1=len;
+    }
+    else if(len>max2){
+        max2=len;
+    }
+}
+
+
+
+
 
   ROS_INFO_STREAM("Triangulation of surfaces started");
   for (int i = 0; i < surface_clouds_.size(); i++)
@@ -488,6 +507,10 @@ bool SurfaceDetection::find_surfaces()
 
     if (apply_concave_hull(*surface_clouds_[i], mesh))
     {
+      if(surface_clouds_[i]->width<max1){
+          continue;
+      }
+      
       mesh_to_marker(mesh, marker);
 
       // saving other properties
