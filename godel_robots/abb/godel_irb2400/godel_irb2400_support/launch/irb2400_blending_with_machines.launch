@@ -75,8 +75,8 @@
 		process execution -->
 	<node name="path_execution_service" pkg="godel_path_execution" type="path_execution_service_node"
 		machine="$(arg path_execution_service_machine)"/>
-        <!-- <node name="auto_blend" pkg="godel_surface_detection" type="robot_auto_blending"
-		machine="$(arg autoblend_machine)"/> -->
+        <node name="auto_blend" pkg="godel_surface_detection" type="robot_auto_blending"
+		machine="$(arg autoblend_machine)"/> 
 	
 	<!-- Launches the blend/scan process planners: requires descartes plugin for the robot
 		model -->
@@ -125,7 +125,7 @@
 	
 	<!-- rviz w/ specified configuration -->
 	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find godel_irb2400_support)/rviz/irb2400_blending.rviz"
-		output="screen" launch-prefix="nice" required="true" machine="$(arg rviz_machine)"/>
+		output="screen" launch-prefix="nice" required="true" machine="$(arg rviz_machine)"/> 
 	<!-- Bring up the MoveIt interface to the real or simulated robot -->
 	<include file="$(find godel_irb2400_moveit_config)/launch/moveit_planning_execution.launch">
 		<arg name="rviz" value="false"/>
@@ -140,7 +140,7 @@
 		<arg name="move_group_machine" value="$(arg move_group_machine)"/>
 	</include>
 	
-	<!--<node name="resource_monitor_User" pkg="resource_monitor" type="hello" output="screen"
+	<node name="resource_monitor_User" pkg="resource_monitor" type="hello" output="screen" machine="GENI-Chicago"
 		 >
 		<param name="process_name" value="rviz"
 			type="str"/>
@@ -194,8 +194,8 @@
 		
 	</node>
 	
-<node name="resource_monitor_SwRI" pkg="resource_monitor" type="hello" output="screen"
-		machine="SwRI" >
+        <node name="resource_monitor_SwRI" pkg="resource_monitor" type="hello" output="screen"
+		machine="Asus" >
 		<param name="process_name" value="robot_state,robot_state_publisher,joint_trajectory_action,ros_abb_ftp_interface_node"
 			type="str"/>
 		<param name="write_to_file" value="true" type="bool"/>
@@ -206,7 +206,7 @@
 		
 	</node>	
 	
-	<include unless="$(arg sim_sensor)" file="$(find godel_surface_detection)/launch/kinect2.launch">
+	<!-- <include unless="$(arg sim_sensor)" file="$(find godel_surface_detection)/launch/kinect2.launch">
 		<arg name="machine" value="$(arg kinect_machine)"/>
 	</include> 
        -->
