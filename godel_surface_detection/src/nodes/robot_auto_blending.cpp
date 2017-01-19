@@ -19,7 +19,7 @@ const static std::string PROCESS_PATH_SERVICE = "process_path";
 const static std::string GET_AVAILABLE_MOTION_PLANS_SERVICE = "get_available_motion_plans";
 const static std::string SELECT_MOTION_PLAN_SERVICE = "select_motion_plan";
 const static std::string SURFACE_BLENDING_PARAMETERS = "surface_blending_parameters";
-const static int MAX_SERVICE_CALL_FAILURE = 20;
+const static int MAX_SERVICE_CALL_FAILURE = 20000000;
 
 int main(int argc, char** argv)
 {
@@ -128,6 +128,7 @@ int main(int argc, char** argv)
     //Blending Simulation
     for (std::size_t i = 0; i < plan_names.size(); ++i)
     {
+     if (plan_names[i].find("blend") != std::string::npos){
       motion_srv.request.name = plan_names[i];
       motion_srv.request.simulate = true;
       motion_srv.request.wait_for_execution = true;
@@ -137,6 +138,7 @@ int main(int argc, char** argv)
         service_call_failure++;
         continue;
       }
+}
     }
     endTime = ros::Time::now();
     simPathTime  = endTime.toSec() - beginTime.toSec();
@@ -145,6 +147,7 @@ int main(int argc, char** argv)
     beginTime = ros::Time::now();
     for (std::size_t i = 0; i < plan_names.size(); ++i)
     {
+      if (plan_names[i].find("blend") != std::string::npos){
       motion_srv.request.name = plan_names[i];
       motion_srv.request.simulate = false;
       motion_srv.request.wait_for_execution = true;
@@ -154,6 +157,7 @@ int main(int argc, char** argv)
         service_call_failure++;
         continue;
       }
+    }
     }
     endTime = ros::Time::now();
     blendPathTime  = endTime.toSec() - beginTime.toSec();
