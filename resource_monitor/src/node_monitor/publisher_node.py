@@ -52,20 +52,20 @@ def data_collector(process_name, write_to_file, sample_interval, net_interface, 
     pub = rospy.Publisher('chatter', String, queue_size=100)
     
     
-    p = Popen(['sudo', 'nethogs', '-t','-d',str(sample_interval), net_interface], stdout=PIPE, bufsize=1, close_fds=ON_POSIX)
-    q = Queue()
-    t = Thread(target=enqueue_output, args=(p.stdout, q))
-    t.daemon = True  # thread dies with the program
-    t.start()    
+    #p = Popen(['sudo', 'nethogs', '-t','-d',str(sample_interval), net_interface], stdout=PIPE, bufsize=1, close_fds=ON_POSIX)
+    #q = Queue()
+    #t = Thread(target=enqueue_output, args=(p.stdout, q))
+    #t.daemon = True  # thread dies with the program
+    #t.start()    
 
     while not rospy.is_shutdown():
         try:
         
-            bw_lines = []
-            queue_size = q.qsize();
-            for i in range(queue_size):
-                line = q.get_nowait();
-                bw_lines.append(line.strip())
+           # bw_lines = []
+           # queue_size = q.qsize();
+           # for i in range(queue_size):
+           #     line = q.get_nowait();
+           #     bw_lines.append(line.strip())
                     
             for m in my_process:        
                 #print "**%d**%d**%d"%(m.name(),m.pid,len(my_process))
@@ -73,23 +73,23 @@ def data_collector(process_name, write_to_file, sample_interval, net_interface, 
             
                 rss = m.memory_info().rss;
             
-                sent_rate=0;
-                rec_rate=0;
-                occurance=0;
+            #    sent_rate=0;
+            #    rec_rate=0;
+            #    occurance=0;
                 
-                for bw in bw_lines:
-                    if m.name()in bw:
+            #    for bw in bw_lines:
+            #        if m.name()in bw:
                         
-                        splitted_line=bw.split('\t',3);
-                        if((str(m.pid)+"/") in splitted_line[0]):
-                            occurance=occurance+1;
-                            sent_rate=sent_rate+float(splitted_line[1])
-                            rec_rate=rec_rate+float(splitted_line[2]);
-                if(occurance!=0):
-                    sent_rate=sent_rate/occurance;
-                    rec_rate=rec_rate/occurance;         
+            #            splitted_line=bw.split('\t',3);
+            #            if((str(m.pid)+"/") in splitted_line[0]):
+            #                occurance=occurance+1;
+            #                sent_rate=sent_rate+float(splitted_line[1])
+            #                rec_rate=rec_rate+float(splitted_line[2]);
+            #    if(occurance!=0):
+            #        sent_rate=sent_rate/occurance;
+            #        rec_rate=rec_rate/occurance;         
                           
-                to_send_str = " %s %s %s %s %s %s %s" % (rospy.get_time(), m.name(), m.pid, cpu_usage, rss, sent_rate, rec_rate)  
+                to_send_str = " %s %s %s %s %s" % (rospy.get_time(), m.name(), m.pid, cpu_usage, rss)  
                 
                 if(not write_to_file):
                     pub.publish(to_send_str)
